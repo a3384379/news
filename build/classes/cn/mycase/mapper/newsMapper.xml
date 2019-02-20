@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mycase.mapper.NewsMapper">
+	<insert id="addNews" parameterType="cn.mycase.entity.News">
+		insert into news(DATE,title,test,category_id)
+		values(#{date},#{title},#{test},#{category_id})
+	</insert>
+
+	<select id="selectNewsList" resultType="cn.mycase.entity.News">
+		select * from news ORDER BY DATE DESC
+	</select>
+
+	<select id="selectNewsById" resultType="cn.mycase.entity.News">
+		select * from news where
+		id=#{id} 
+	</select>
+
+	<select id="searchResult" parameterType="java.lang.String"
+		resultType="cn.mycase.entity.News">
+		select * from news where title like '%${value}%'
+	</select>
+
+	<delete id="deleteNewsById" parameterType="Integer">
+		delete from news where
+		id=#{id}
+	</delete>
+
+	<update id="updateNewsById"
+		parameterType="cn.mycase.entity.News">
+		update news set
+		date=#{date},title=#{title},test=#{test},category_id=#{category_id}
+		where id=#{id}
+	</update>
+	<!--根据cid分页查询 -->
+	<select id="findLimit" parameterType="cn.mycase.entity.PageBean"
+		resultType="cn.mycase.entity.News">
+		select * from news where category_id=#{cid} ORDER BY DATE DESC limit ${leftLimt},${currentCount} 
+	</select>
+
+	<select id="newsCount" parameterType="Integer" resultType="Integer">
+		select count(*) from news where category_id=#{cid}
+	</select>
+
+	<!--评论  -->
+	<insert id="saveComment" parameterType="cn.mycase.entity.Comment">
+		insert into comment(user,date,test,news_id) values(#{user},#{date},#{test},#{news_id})
+	</insert>
+	
+	<select id="findComment" resultType="cn.mycase.entity.Comment">
+		SELECT * FROM COMMENT  ORDER BY DATE DESC
+	</select>
+
+</mapper> 

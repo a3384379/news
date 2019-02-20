@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	
+	<bean id="categoryService" class="cn.mycase.service.impl.CategoryServiceImpl">
+		<property name="categoryMapper" ref="categoryMapper" ></property>
+	</bean>
+	
+	<bean id="userService" class="cn.mycase.service.impl.UserServiceImpl">
+		<property name="userMapper" ref="userMapper" ></property>
+	</bean>
+	
+	<!--加载db.properties文件  -->
+	<context:property-placeholder location="classpath:db.properties"/>
+	
+	<!--配置数据源  -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<!--配置sqlSessionFactory  -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--设置设置数据源  -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!--加载mapper.xml文件  -->
+		<property name="mapperLocations" value="classpath:cn/mycase/mapper/*.xml"></property>
+	</bean>
+	
+	<!-- 将MyBatis的SqlSessionFactory 交给Spring -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<!-- 设置Mapper扫描包 -->
+		<property name="basePackage" value="cn.mycase.mapper"></property>
+	</bean>
+
+	
+	
+	
+	
+
+</beans>

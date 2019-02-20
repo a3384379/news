@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mycase.mapper.CategoryMapper">
+	<select id="queryCategoryList" 	resultType="cn.mycase.entity.Category">
+			SELECT * FROM `category` 
+	</select>
+	
+	<select id="queryByid" parameterType="Integer" resultType="cn.mycase.entity.Category">
+			SELECT * FROM `category` WHERE cid=#{cid}
+	</select>
+	
+	<insert id="addCategory" parameterType="String">
+		insert into category(cname) values(#{cname})
+	</insert>
+	
+	<update id="editCategory" parameterType="cn.mycase.entity.Category" >
+		UPDATE category SET cname=#{cname} WHERE cid=#{cid}
+	</update>
+	
+	<delete id="deleteCategory" parameterType="Integer">
+		delete from category where cid=#{cid}
+	</delete>
+
+</mapper>

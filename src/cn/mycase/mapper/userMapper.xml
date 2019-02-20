@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mycase.mapper.UserMapper">
+
+	<select id="queryUser" parameterType="String"
+		resultType="cn.mycase.entity.User">
+		SELECT * FROM `user` where userName=#{userName}
+	</select>
+
+	<select id="queryUserByid" parameterType="Integer"
+		resultType="cn.mycase.entity.User">
+		SELECT * FROM `user` where id=#{id}
+	</select>
+
+	<update id="update" parameterType="String">
+		UPDATE user SET
+		password=#{password} WHERE username='3384379'
+	</update>
+
+<!--普通用户  -->
+	<select id="queryOrdinaryUser" parameterType="String"
+		resultType="cn.mycase.entity.OrdinaryUser">
+		SELECT * FROM `ordinaryUser` where userName=#{userName}
+	</select>
+
+	<select id="queryOrdinaryUserByid" parameterType="Integer"
+		resultType="cn.mycase.entity.OrdinaryUser">
+		SELECT * FROM `ordinaryUser` where id=#{id}
+	</select>
+	<insert id="saveOrdinaryUser" parameterType="cn.mycase.entity.OrdinaryUser">
+		insert into ordinaryUser values(null,#{username},#{password},#{email},'0')
+	</insert>
+
+</mapper>
